@@ -56,10 +56,4 @@ public class VehicleController {
         return new ResponseEntity<>(repository.save(vehicle), HttpStatus.CREATED);
     }
 
-
-//    @GetMapping("/{id}")
-//    public @ResponseBody Developer getOneDeveloper(@PathVariable Long id){
-//        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-//    }
-
 }

@@ -1,9 +1,17 @@
 package com.expressian.expressian.repositories;
 
 import com.expressian.expressian.models.Customers;
+import com.expressian.expressian.models.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customers, Long> {
+
+    @Query("SELECT c FROM Customers c WHERE c.firstName = :firstName")
+    List<Customers> getAllByFistName(@Param("firstName") String firstName);
 }
