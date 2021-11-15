@@ -4,6 +4,7 @@ import com.expressian.expressian.models.Customers;
 import com.expressian.expressian.models.Vehicle;
 import com.expressian.expressian.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,13 @@ public class CustomerController {
     @GetMapping("/getby/{firstName}")
     @ResponseBody
     public ResponseEntity<List<Customers>> getAllByFirstName(@PathVariable String firstName) {
-        return new ResponseEntity<>( repository.getAllByFistName(firstName), HttpStatus.OK);
+        return new ResponseEntity<>( repository.getAllByFirstName(firstName), HttpStatus.OK);
+    }
+
+    @GetMapping("/searchby/{lastName}")
+    @ResponseBody
+    public ResponseEntity<List<Customers>> getAllByLastName(@PathVariable String lastName) {
+        return new ResponseEntity<>( repository.findAllByLastName(lastName, Sort.by("lastName")), HttpStatus.OK);
     }
 
 

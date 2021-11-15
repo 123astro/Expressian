@@ -1,9 +1,6 @@
 package com.expressian.expressian.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 //@Table(name="vehicle")
@@ -11,14 +8,26 @@ public class Vehicle {
     @Id
     @GeneratedValue
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "store_id", referencedColumnName = "id")
+    private Store store;
     private String brand;
     private String model;
     private Integer doorAmount;
 
-    public Vehicle(String brand, String model, Integer doorAmount) {
+    public Vehicle(String brand, String model, Integer doorAmount, Store store) {
         this.brand = brand;
         this.model = model;
         this.doorAmount = doorAmount;
+        this.store = store;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 
     public Vehicle() {}
