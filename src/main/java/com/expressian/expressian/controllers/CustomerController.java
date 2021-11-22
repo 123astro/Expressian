@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -21,11 +22,11 @@ public class CustomerController {
     public @ResponseBody
     List<Customers> getCustomer() {
         return repository.findAll();
-
     }
 
     @PostMapping
-    public @ResponseBody Customers createCustomer(@RequestBody Customers newCustomer){
+    public @ResponseBody
+    Customers createCustomer(@RequestBody Customers newCustomer) {
         return repository.save(newCustomer);
     }
 
@@ -33,13 +34,13 @@ public class CustomerController {
     @GetMapping("/getby/{firstName}")
     @ResponseBody
     public ResponseEntity<List<Customers>> getAllByFirstName(@PathVariable String firstName) {
-        return new ResponseEntity<>( repository.getAllByFirstName(firstName), HttpStatus.OK);
+        return new ResponseEntity<>(repository.getAllByFirstName(firstName), HttpStatus.OK);
     }
 
     @GetMapping("/searchby/{lastName}")
     @ResponseBody
     public ResponseEntity<List<Customers>> getAllByLastName(@PathVariable String lastName) {
-        return new ResponseEntity<>( repository.findAllByLastName(lastName, Sort.by("lastName")), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findAllByLastName(lastName, Sort.by("lastName")), HttpStatus.OK);
     }
 
 

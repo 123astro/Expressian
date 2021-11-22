@@ -1,6 +1,8 @@
 package com.expressian.expressian.controllers;
 
+import com.expressian.expressian.models.Location;
 import com.expressian.expressian.models.Vehicle;
+import com.expressian.expressian.repositories.LocationRepository;
 import com.expressian.expressian.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ import java.util.List;
 public class VehicleController {
     @Autowired
     private VehicleRepository repository;
+
+    @Autowired
+    private LocationRepository locationRepository;
 
     @GetMapping
     public @ResponseBody
@@ -55,5 +60,17 @@ public class VehicleController {
         if (updates.getDoorAmount() != null) vehicle.setDoorAmount(updates.getDoorAmount());
         return new ResponseEntity<>(repository.save(vehicle), HttpStatus.CREATED);
     }
+
+    @PutMapping("/location/{id}")
+    @ResponseBody
+    public ResponseEntity<Vehicle> updateLocation(@PathVariable Long id, @RequestBody Location updates){
+        Vehicle vehicle = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (updates.getLocation() == null)  throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        locationRepository.save(updates);
+        vehicle.setLocation(updates);
+        return new ResponseEntity<>(repository.save(vehicle), HttpStatus.OK ) ;
+    }
+
+
 
 }

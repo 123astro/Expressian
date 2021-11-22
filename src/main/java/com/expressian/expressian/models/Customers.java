@@ -1,9 +1,9 @@
 package com.expressian.expressian.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 //@Table(name="customer")
@@ -15,13 +15,34 @@ public class Customers {
     private String lastName;
     private Integer age;
 
-    public Customers(String firstName, String lastName, Integer age){
+    @JsonBackReference
+
+    @ManyToMany
+    @JoinTable(
+            name = "store_customer",
+            inverseJoinColumns = @JoinColumn(name = "store_id"),
+            joinColumns = @JoinColumn(name = "customer_id")
+    )
+
+    Set<Store> stores;
+
+    public Customers(String firstName, String lastName, Integer age, Set<Store> stores) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.stores = stores;
     }
 
-    public Customers(){};
+    public Customers() {
+    }
+
+    public Set<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(Set<Store> stores) {
+        this.stores = stores;
+    }
 
     public Long getId() {
         return id;

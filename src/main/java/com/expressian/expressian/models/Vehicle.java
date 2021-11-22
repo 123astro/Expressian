@@ -15,6 +15,19 @@ public class Vehicle {
     private String model;
     private Integer doorAmount;
 
+    @OneToOne
+    private Location location;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Vehicle() {}
+
     public Vehicle(String brand, String model, Integer doorAmount, Store store) {
         this.brand = brand;
         this.model = model;
@@ -29,8 +42,6 @@ public class Vehicle {
     public void setStore(Store store) {
         this.store = store;
     }
-
-    public Vehicle() {}
 
     public Long getId() {
         return id;

@@ -1,9 +1,13 @@
 package com.expressian.expressian.models;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.lang.model.element.Name;
 import javax.persistence.*;
+import java.lang.invoke.SerializedLambda;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -17,12 +21,32 @@ public class Store {
     @JoinColumn(name = "store_id", referencedColumnName = "id")
     private List<Vehicle> vehicles;
 
-    public Store(String storeName, List<Vehicle> vehicles){
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(
+            name = "store_customer",
+            joinColumns = @JoinColumn(name = "store_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+
+    Set<Customers> customers;
+
+    public Store(String storeName, List<Vehicle> vehicles, Set<Customers> customers) {
         this.storeName = storeName;
         this.vehicles = vehicles;
+        this.customers = customers;
     }
 
-    public Store(){}
+    public Set<Customers> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<Customers> customers) {
+        this.customers = customers;
+    }
+
+    public Store() {
+    }
 
     public List<Vehicle> getVehicles() {
         return vehicles;
